@@ -45,7 +45,7 @@ public class SubmarineController : MonoBehaviour
 
     private void Update()
     {
-        CheckInput();
+        CheckMovementInput();
         ApplyDepthResistance(); // Adjusting speed based on depth
     }
     private void FixedUpdate()
@@ -53,7 +53,7 @@ public class SubmarineController : MonoBehaviour
         Move();
         ApplyBuoyancy();
     }
-    private void CheckInput()
+    private void CheckMovementInput()
     {
         // Calculating move Input
         float moveInput = Input.GetAxis("Vertical");
