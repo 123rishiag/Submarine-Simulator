@@ -30,8 +30,9 @@ public class GameController : MonoBehaviour
     public void PlayGame()
     {
         isPaused = false;
-        uiController.mainMenuPanel.SetActive(false);
-        uiController.pauseMenuPanel.SetActive(false);
+        uiController.mainMenuPanel.gameObject.SetActive(false);
+        uiController.pauseMenuPanel.gameObject.SetActive(false);
+        uiController.profileFormPanel.gameObject.SetActive(false);
     }
 
     private void PauseGame()
@@ -39,7 +40,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = true;
-            uiController.pauseMenuPanel.SetActive(true);
+            uiController.pauseMenuPanel.gameObject.SetActive(true);
         }
     }
     public void MainMenu()
@@ -50,9 +51,15 @@ public class GameController : MonoBehaviour
     public void QuitGame()
     {
 #if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();  // Stops play mode in Editor
+        EditorApplication.ExitPlaymode();
 #else
-            Application.Quit();  // Quits the game in a build
+            Application.Quit();
 #endif
+    }
+
+    public void ProfileMenu()
+    {
+        uiController.mainMenuPanel.gameObject.SetActive(false);
+        uiController.profileFormPanel.gameObject.SetActive(true);
     }
 }
