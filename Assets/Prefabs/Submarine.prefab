@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2330220534015476529}
   - component: {fileID: 8685558774746628820}
   - component: {fileID: 1195431050131969756}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Submarine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 998211b1cc32f29499d69df03e9e5ae2, type: 2}
+  - {fileID: 2100000, guid: 526908220503ebc4f9817d9ff87b1f6f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
