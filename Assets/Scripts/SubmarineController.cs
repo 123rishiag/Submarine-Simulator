@@ -3,9 +3,9 @@ using UnityEngine;
 public class SubmarineController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 30f;
-    [SerializeField] private float turnSpeed = 15;
-    [SerializeField] private float verticalSpeed = 15f;
+    [SerializeField] private float moveSpeed = 300f;
+    [SerializeField] private float turnSpeed = 150;
+    [SerializeField] private float verticalSpeed = 50f;
 
     // As the submarine goes deeper, it moves slower due to pressure.
     // More drag at greater depths.
@@ -17,10 +17,11 @@ public class SubmarineController : MonoBehaviour
     // Submarine naturally floats if left alone.
     // The deeper it is, the harder it is to float back up
     [Header("Buoyancy Settings")]
-    [SerializeField] private float buoyancyForce = 10f;
+    [SerializeField] private float buoyancyForce = 5000f;
     [SerializeField] private float minBuoyancyFactor = 0.2f; // Minimum floating strength at max depth
 
     [Header("Layer Settings")]
+    [SerializeField] private LayerMask waterLayer;
     [SerializeField] private LayerMask seabedLayer;
 
     // Private Variables
@@ -35,18 +36,56 @@ public class SubmarineController : MonoBehaviour
 
     private float currentBuoyancy;
 
+    private float waterSurfacePositonY;
+    public float DepthFromWaterSurface { get; private set; }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false; // Disabling gravity as there is no gravity inside water
 
+        DetectWaterSurface();
         DetectSeabed();
     }
+    private void DetectWaterSurface()
+    {
+        Vector3 rayOrigin = transform.position;
+        Vector3 rayDirection = Vector3.up;
 
+        RaycastHit hit;
+        if (Physics.Raycast(rayOrigin, rayDirection, out hit, Mathf.Infinity, waterLayer))
+        {
+            waterSurfacePositonY = hit.point.y;
+            // Debug.DrawRay(rayOrigin, rayDirection * hit.distance, Color.green, 5000f);
+        }
+        else
+        {
+            Debug.LogError("Water Surface not found!");
+        }
+    }
+    private void DetectSeabed()
+    {
+        // Detecting Seabed using Raycast
+        Vector3 rayOrigin = transform.position;
+        Vector3 rayDirection = Vector3.down;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, seabedLayer))
+        {
+            maxDepth = Mathf.Abs(hit.point.y);
+            // Debug.DrawRay(rayOrigin, rayDirection * hit.distance, Color.green, 5000f);
+        }
+        else
+        {
+            maxDepth = defaultMaxDepth;
+            Debug.LogError("Seabed not found!");
+        }
+    }
     private void Update()
     {
         CheckMovementInput();
         ApplyDepthResistance(); // Adjusting speed based on depth
+        DetectDepthFromWaterSurface();
     }
     private void FixedUpdate()
     {
@@ -78,6 +117,10 @@ public class SubmarineController : MonoBehaviour
         float depthFactor = depth / maxDepth;
         // Fetching Resistance Fatctor based on MaxResistance
         resistanceFactor = Mathf.Clamp01(depthFactor) * maxResistance;
+    }
+    private void DetectDepthFromWaterSurface()
+    {
+        DepthFromWaterSurface = Mathf.Max(0, waterSurfacePositonY - transform.position.y);
     }
     private void Move()
     {
@@ -117,24 +160,5 @@ public class SubmarineController : MonoBehaviour
                 new Vector3(rb.linearVelocity.x,
                 Mathf.Lerp(rb.linearVelocity.y, 0, waterDrag * Time.fixedDeltaTime),
                 rb.linearVelocity.z);
-    }
-
-    private void DetectSeabed()
-    {
-        // Detecting Seabed using Raycast
-        Vector3 rayOrigin = transform.position;
-        Vector3 rayDirection = Vector3.down;
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, seabedLayer))
-        {
-            maxDepth = Mathf.Abs(hit.point.y);
-            // Debug.DrawRay(rayOrigin, rayDirection * hit.distance, Color.green, 5000f);
-        }
-        else
-        {
-            maxDepth = defaultMaxDepth;
-            Debug.LogError("Seabed not found!");
-        }
     }
 }
