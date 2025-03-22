@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
         uiController.mainMenuPanel.gameObject.SetActive(false);
         uiController.pauseMenuPanel.gameObject.SetActive(false);
         uiController.profileFormPanel.gameObject.SetActive(false);
+        uiController.controlMenuPanel.gameObject.SetActive(false);
     }
 
     private void PauseGame()
@@ -61,5 +62,17 @@ public class GameController : MonoBehaviour
     {
         uiController.mainMenuPanel.gameObject.SetActive(false);
         uiController.profileFormPanel.gameObject.SetActive(true);
+    }
+
+    public void EnableControlMenu()
+    {
+        uiController.mainMenuPanel.gameObject.SetActive(false);
+        uiController.controlMenuPanel.gameObject.SetActive(true);
+    }
+
+    public void DisableControlMenu()
+    {
+        uiController.mainMenuPanel.gameObject.SetActive(true);
+        uiController.controlMenuPanel.gameObject.SetActive(false);
     }
 }

@@ -31,12 +31,19 @@ public class ProfileManager : MonoBehaviour
 
     public void SaveProfile()
     {
-        ProfileData newProfile = new ProfileData(
-            uiController.profileFirstNameField.text,
-            uiController.profileLastNameField.text,
-            uiController.profileLocationField.text,
-            uiController.profileEmailField.text
-        );
+        string firstName = uiController.profileFirstNameField.text.Trim();
+        string lastName = uiController.profileLastNameField.text.Trim();
+        string location = uiController.profileLocationField.text.Trim();
+        string email = uiController.profileEmailField.text.Trim();
+
+        if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) ||
+            string.IsNullOrEmpty(location) || !IsValidEmail(email))
+        {
+            uiController.ShowValidationMessage("Invalid profile details.");
+            return;
+        }
+
+        ProfileData newProfile = new ProfileData(firstName, lastName, location, email);
 
         // In case of existing
         if (selectedProfileIndex >= 0)
@@ -104,13 +111,15 @@ public class ProfileManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        for (int index = 0; index < profiles.Count; ++index)
+        for (int i = 0; i < profiles.Count; ++i)
         {
             // Creating new Item
             GameObject profileItem = Instantiate(uiController.profileListItemPrefab, uiController.profileListContentPanel);
             // Fetching its First and Last Name
-            profileItem.GetComponentInChildren<TextMeshProUGUI>().text = profiles[index].firstName + " " + profiles[index].lastName;
+            profileItem.GetComponentInChildren<TextMeshProUGUI>().text = profiles[i].firstName + " " + profiles[i].lastName;
             // Adding its Listener
+
+            int index = i;
             profileItem.GetComponent<Button>().onClick.AddListener(() => SelectProfile(index));
             // Enabling the profile Item
             profileItem.gameObject.SetActive(true);
@@ -130,6 +139,20 @@ public class ProfileManager : MonoBehaviour
         uiController.profileLocationField.text = "";
         uiController.profileEmailField.text = "";
         selectedProfileIndex = -1;
+    }
+
+    // Getters
+    private bool IsValidEmail(string _email)
+    {
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(_email);
+            return addr.Address == _email;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
 

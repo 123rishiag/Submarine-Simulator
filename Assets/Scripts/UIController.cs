@@ -21,7 +21,12 @@ public class UIController : MonoBehaviour
     [SerializeField] public Transform mainMenuPanel; // Main Menu Panel
     [SerializeField] public Button mainMenuPlayButton; // Button to start the game
     [SerializeField] public Button mainMenuProfileButton; // Button to start the game
+    [SerializeField] public Button mainMenuControlButton; // Button to start the game
     [SerializeField] public Button mainMenuQuitButton; // Button to quit the game
+
+    [Header("Control Menu Elements")]
+    [SerializeField] public Transform controlMenuPanel;
+    [SerializeField] public Button controlMenuBackButton;
 
     [Header("Profile Form Elements")]
     [SerializeField] public Transform profileFormPanel;
@@ -35,6 +40,8 @@ public class UIController : MonoBehaviour
     [SerializeField] public TMP_InputField profileLocationField;
     [SerializeField] public TMP_InputField profileEmailField;
 
+    [SerializeField] public TMP_Text validationText;
+
     [SerializeField] public Button profileSaveButton;
     [SerializeField] public Button profileDeleteButton;
     [SerializeField] public Button profileBackButton;
@@ -47,9 +54,11 @@ public class UIController : MonoBehaviour
         pauseMenuMainMenuButton.onClick.AddListener(gameController.MainMenu);
 
         mainMenuPlayButton.onClick.AddListener(gameController.PlayGame);
+        mainMenuProfileButton.onClick.AddListener(gameController.ProfileMenu);
+        mainMenuControlButton.onClick.AddListener(gameController.EnableControlMenu);
         mainMenuQuitButton.onClick.AddListener(gameController.QuitGame);
 
-        mainMenuProfileButton.onClick.AddListener(gameController.ProfileMenu);
+        controlMenuBackButton.onClick.AddListener(gameController.DisableControlMenu);
 
         profileSaveButton.onClick.AddListener(profileManager.SaveProfile);
         profileDeleteButton.onClick.AddListener(profileManager.DeleteProfile);
@@ -90,6 +99,8 @@ public class UIController : MonoBehaviour
             profileInputPanel.gameObject.SetActive(false);
             profileListPanel.gameObject.SetActive(true);
 
+            validationText.text = "";
+
             profileSaveButton.gameObject.SetActive(false);
             profileDeleteButton.gameObject.SetActive(false);
             profileBackButton.gameObject.SetActive(false);
@@ -97,4 +108,9 @@ public class UIController : MonoBehaviour
             profileMainMenuButton.gameObject.SetActive(true);
         }
     }
+    public void ShowValidationMessage(string _message)
+    {
+        validationText.text = _message;
+    }
+
 }
