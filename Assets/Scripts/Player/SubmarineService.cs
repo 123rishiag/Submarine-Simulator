@@ -1,3 +1,4 @@
+using ServiceLocator.Controls;
 using ServiceLocator.UI;
 using UnityEngine;
 
@@ -16,10 +17,10 @@ namespace ServiceLocator.Player
             submarineView = Object.Instantiate(submarineConfig.submarinePrefab.GetComponent<SubmarineView>());
         }
 
-        public void Init(UIService _uiService)
+        public void Init(InputService _inputService, UIService _uiService)
         {
             // Setting Elements
-            submarineView.Init(submarineConfig, _uiService);
+            submarineView.Init(submarineConfig, _inputService, _uiService);
         }
         public void FixedUpdate() => submarineView.FixedUpdateSub();
         public void Update() => submarineView.UpdateSub();
