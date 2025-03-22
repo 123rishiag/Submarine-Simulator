@@ -119,51 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &89594741
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 89594742}
-  - component: {fileID: 89594743}
-  m_Layer: 0
-  m_Name: ProfileManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &89594742
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89594741}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &89594743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89594741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af52c95804d48db499b30be00bb640a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiController: {fileID: 8730985008515977468}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,17 +289,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1506638335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1358102181 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8685558774746628820, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-  m_PrefabInstance: {fileID: 4223635129094840696}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3914da88a02bc9042a48a9245aa5d359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1495000835
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,10 +475,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2003540652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6adb9cfe41ce37c4db8bbd7da838cbf6, type: 3}
+  m_Script: {fileID: 11500000, guid: 27f461aa77517f2409ab30d0af127351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiController: {fileID: 8730985008515977468}
+  uiCanvas: {fileID: 8730985008515977468}
+  cameraConfig: {fileID: 11400000, guid: 4b44cc5bc1c8a0c4aba8029deb68d069, type: 2}
+  frontCamera: {fileID: 4983713104059326908}
+  miniMapCamera: {fileID: 2704933491765762928}
+  postProcessingVolume: {fileID: 832575518}
+  submarineConfig: {fileID: 11400000, guid: 8f06a43d9ef2e7544b368fe1ec22baec, type: 2}
 --- !u!4 &2033353159669551689
 Transform:
   m_ObjectHideFlags: 0
@@ -619,75 +568,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1001 &4223635129094840696
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116416550235991446, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1195431050131969756, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: frontCamera
-      value: 
-      objectReference: {fileID: 4983713104059326908}
-    - target: {fileID: 1195431050131969756, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: miniMapCamera
-      value: 
-      objectReference: {fileID: 2704933491765762928}
-    - target: {fileID: 1195431050131969756, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: postProcessingVolume
-      value: 
-      objectReference: {fileID: 832575518}
-    - target: {fileID: 2040271782367106219, guid: 0c21d559482a6604786521616c5884cc, type: 3}
-      propertyPath: m_Name
-      value: Submarine
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0c21d559482a6604786521616c5884cc, type: 3}
 --- !u!4 &4885544472132399404
 Transform:
   m_ObjectHideFlags: 0
@@ -930,18 +810,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 4920868581928232730, guid: aaa2b7d4474c50f459bea564016533be, type: 3}
-      propertyPath: gameController
-      value: 
-      objectReference: {fileID: 2003540654}
-    - target: {fileID: 4920868581928232730, guid: aaa2b7d4474c50f459bea564016533be, type: 3}
-      propertyPath: profileManager
-      value: 
-      objectReference: {fileID: 89594743}
-    - target: {fileID: 4920868581928232730, guid: aaa2b7d4474c50f459bea564016533be, type: 3}
-      propertyPath: submarineController
-      value: 
-      objectReference: {fileID: 1358102181}
     - target: {fileID: 5590120971149120153, guid: aaa2b7d4474c50f459bea564016533be, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1053,8 +921,6 @@ SceneRoots:
   - {fileID: 1506638335}
   - {fileID: 1495000836}
   - {fileID: 7926228272273566996}
-  - {fileID: 4223635129094840696}
   - {fileID: 8282651575058406681}
-  - {fileID: 89594742}
   - {fileID: 2003540653}
   - {fileID: 1702838882}

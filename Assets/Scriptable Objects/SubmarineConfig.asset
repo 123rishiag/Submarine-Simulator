@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e528680319007444ab398d42522c4b3, type: 3}
+  m_Name: SubmarineConfig
+  m_EditorClassIdentifier: 
+  submarinePrefab: {fileID: 8685558774746628820, guid: 0c21d559482a6604786521616c5884cc, type: 3}
+  moveSpeed: 1000
+  turnSpeed: 150
+  verticalSpeed: 150
+  defaultMaxDepth: 1000
+  maxResistance: 0.5
+  waterDrag: 0.98
+  buoyancyForce: 5000
+  minBuoyancyFactor: 0.2
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  seabedLayer:
+    serializedVersion: 2
+    m_Bits: 128
