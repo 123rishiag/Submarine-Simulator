@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4922087736522152332}
   - component: {fileID: 2330220534015476529}
   - component: {fileID: 8685558774746628820}
-  - component: {fileID: 1195431050131969756}
   m_Layer: 6
   m_Name: Submarine
   m_TagString: Untagged
@@ -152,43 +151,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3914da88a02bc9042a48a9245aa5d359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 300
-  turnSpeed: 150
-  verticalSpeed: 50
-  defaultMaxDepth: 1000
-  maxResistance: 0.5
-  waterDrag: 0.98
-  buoyancyForce: 5000
-  minBuoyancyFactor: 0.2
-  waterLayer:
-    serializedVersion: 2
-    m_Bits: 16
-  seabedLayer:
-    serializedVersion: 2
-    m_Bits: 128
---- !u!114 &1195431050131969756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2040271782367106219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e32bf1a008530944871a39a7b5d555e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frontCamera: {fileID: 0}
-  miniMapCamera: {fileID: 0}
-  frontCameraPositionOffset: {x: -0.25, y: 1.5, z: 5}
-  miniMapCameraPitch: 90
-  miniMapHeight: 50
-  miniMapSize: 50
-  postProcessingVolume: {fileID: 0}
-  colorAdjustmentColor: {r: 0.3, g: 0.8, b: 0.3, a: 1}
-  colorAdjustmentExposure: 1.5
-  colorAdjustmentSaturation: -30
-  filmGrainIntensity: 0.2
-  filmGrainResponse: 0.7
-  vignetteIntensity: 0.25
-  vignetteSmoothness: 0.5
