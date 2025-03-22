@@ -1,3 +1,4 @@
+using ServiceLocator.Controls;
 using ServiceLocator.Player;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -19,6 +20,7 @@ namespace ServiceLocator.Vision
         private bool isNightVisionOn = false;
 
         // Private Services
+        private InputService inputService;
         private SubmarineService submarineService;
 
         public CameraService(CameraConfig _cameraConfig, Camera _frontCamera, Camera _miniMapCamera, Volume _postProcessingVolume)
@@ -45,14 +47,13 @@ namespace ServiceLocator.Vision
                 Debug.LogError("Post Processing Effects missing in Volume Profile!");
             }
         }
-        public void Init(SubmarineService _submarineService)
+        public void Init(InputService _inputService, SubmarineService _submarineService)
         {
             // Setting Services
+            inputService = _inputService;
             submarineService = _submarineService;
-        }
-        public void Update()
-        {
-            CheckNightVisionInput();
+
+            inputService.GetInputControls().Camera.ToogleNightVision.started += ctx => ToggleNightVision();
         }
         public void LateUpdate()
         {
@@ -75,16 +76,13 @@ namespace ServiceLocator.Vision
             miniMapCamera.transform.position = miniMapCameraPosition;
         }
 
-        private void CheckNightVisionInput()
+        private void ToggleNightVision()
         {
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                isNightVisionOn = !isNightVisionOn;
-                if (isNightVisionOn)
-                    EnableNightVision();
-                else
-                    DisableNightVision();
-            }
+            isNightVisionOn = !isNightVisionOn;
+            if (isNightVisionOn)
+                EnableNightVision();
+            else
+                DisableNightVision();
         }
         private void EnableNightVision()
         {

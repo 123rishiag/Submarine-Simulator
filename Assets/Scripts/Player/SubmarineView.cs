@@ -1,3 +1,4 @@
+using ServiceLocator.Controls;
 using ServiceLocator.UI;
 using UnityEngine;
 
@@ -10,8 +11,10 @@ namespace ServiceLocator.Player
         private Rigidbody rb;
 
         private Vector3 moveDirection;
-        private Vector3 verticalDirection;
+        private Vector2 moveVector;
+        private float moveInput;
         private float turnInput;
+        private Vector3 verticalDirection;
 
         private Vector3 depthSensorPosition;
         private float maxDepth;
@@ -23,9 +26,10 @@ namespace ServiceLocator.Player
         public float DepthFromWaterSurface { get; private set; }
 
         // Private Services
+        private InputService inputService;
         private UIService uiService;
 
-        public void Init(SubmarineConfig _submarineConfig, UIService _uiService)
+        public void Init(SubmarineConfig _submarineConfig, InputService _inputService, UIService _uiService)
         {
             // Setting Variables
             submarineConfig = _submarineConfig;
@@ -33,11 +37,28 @@ namespace ServiceLocator.Player
             rb.useGravity = false; // Disabling gravity as there is no gravity inside water
 
             // Setting Services
+            inputService = _inputService;
             uiService = _uiService;
 
             DetectWaterSurface();
             DetectSeabed();
+            SetInput();
         }
+
+        private void SetInput()
+        {
+            InputControls inputControls = inputService.GetInputControls();
+
+            inputControls.Player.Move.performed += ctx => moveVector = ctx.ReadValue<Vector2>();
+            inputControls.Player.Move.canceled += ctx => moveVector = Vector2.zero;
+
+            inputControls.Player.Ascend.performed += ctx => verticalDirection = Vector3.up;
+            inputControls.Player.Ascend.canceled += ctx => verticalDirection = Vector3.zero;
+
+            inputControls.Player.Descend.performed += ctx => verticalDirection = Vector3.down;
+            inputControls.Player.Descend.canceled += ctx => verticalDirection = Vector3.zero;
+        }
+
         private void DetectWaterSurface()
         {
             Vector3 rayOrigin = transform.position;
@@ -79,27 +100,20 @@ namespace ServiceLocator.Player
         }
         public void UpdateSub()
         {
-            CheckMovementInput();
+            SetMovementVariables();
             ApplyDepthResistance(); // Adjusting speed based on depth
             DetectDepthFromWaterSurface();
         }
-        private void CheckMovementInput()
+        private void SetMovementVariables()
         {
-            // Calculating move Input
-            float moveInput = Input.GetAxis("Vertical");
-            moveDirection = transform.forward * moveInput;
-
             // Calculating turn input
-            turnInput = Input.GetAxis("Horizontal");
+            turnInput = moveVector.x;
             if (Vector3.Dot(transform.forward, moveDirection) < 0)
                 turnInput = turnInput * -1; // Reversing Turn movements when going backwards
 
-            // Calculating vertical input
-            verticalDirection = Vector3.zero;
-            if (Input.GetKey(KeyCode.Space))
-                verticalDirection = Vector3.up;
-            else if (Input.GetKey(KeyCode.LeftControl))
-                verticalDirection = Vector3.down;
+            // Calculating move Input
+            moveInput = moveVector.y;
+            moveDirection = transform.forward * moveInput;
         }
         private void ApplyDepthResistance()
         {

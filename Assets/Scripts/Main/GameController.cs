@@ -1,3 +1,4 @@
+using ServiceLocator.Controls;
 using ServiceLocator.Player;
 using ServiceLocator.Profile;
 using ServiceLocator.UI;
@@ -10,13 +11,10 @@ namespace ServiceLocator.Main
 {
     public class GameController
     {
-        // Private Variables
-        private bool isPaused;
-
         // Private Services
         private GameService gameService;
 
-        //private InputService inputService;
+        private InputService inputService;
         private CameraService cameraService;
         private UIService uiService;
         private SubmarineService submarineService;
@@ -25,7 +23,7 @@ namespace ServiceLocator.Main
         public GameController(GameService _gameService)
         {
             // Setting Variables
-            isPaused = true;
+            Time.timeScale = 0f;
 
             // Setting Services
             gameService = _gameService;
@@ -33,10 +31,13 @@ namespace ServiceLocator.Main
             // Setting Elements
             CreateServices();
             InjectDependencies();
+
+            inputService.GetInputControls().Game.Pause.started += ctx => PauseGame();
         }
         private void CreateServices()
         {
             // Setting Services
+            inputService = new InputService();
             cameraService = new CameraService(gameService.cameraConfig, gameService.frontCamera,
                 gameService.miniMapCamera, gameService.postProcessingVolume);
             uiService = new UIService(gameService.uiCanvas, this);
@@ -45,42 +46,48 @@ namespace ServiceLocator.Main
         }
         private void InjectDependencies()
         {
-            cameraService.Init(submarineService);
+            inputService.Init();
+            cameraService.Init(inputService, submarineService);
             uiService.Init(profileService);
-            submarineService.Init(uiService);
+            submarineService.Init(inputService, uiService);
             profileService.Init(uiService);
         }
         public void FixedUpdate()
         {
+            // Input Service
+            // Camera Service
+            // UI Service
             submarineService.FixedUpdate();
+            // Profile Service
         }
         public void Update()
         {
-            cameraService.Update();
+            // Input Service
+            // Camera Service
+            // UI Service
             submarineService.Update();
-            PauseGame();
-
-            if (!isPaused)
-            {
-                Time.timeScale = 1f;
-            }
-            else
-            {
-                Time.timeScale = 0f;
-            }
+            // Profile Service
         }
         public void LateUpdate()
         {
+            // Input Service
             cameraService.LateUpdate();
+            // UI Service
+            // Submarine Service
+            // Profile Service
         }
         public void Destroy()
         {
+            inputService.Destroy();
+            // Camera Service
             uiService.Destroy();
+            // Submarine Service
+            // Profile Service
         }
 
         public void PlayGame()
         {
-            isPaused = false;
+            Time.timeScale = 1f;
             uiService.GetController().mainMenuPanel.gameObject.SetActive(false);
             uiService.GetController().pauseMenuPanel.gameObject.SetActive(false);
             uiService.GetController().profileFormPanel.gameObject.SetActive(false);
@@ -89,11 +96,8 @@ namespace ServiceLocator.Main
 
         private void PauseGame()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                isPaused = true;
-                uiService.GetController().pauseMenuPanel.gameObject.SetActive(true);
-            }
+            Time.timeScale = 0f;
+            uiService.GetController().pauseMenuPanel.gameObject.SetActive(true);
         }
         public void MainMenu()
         {
