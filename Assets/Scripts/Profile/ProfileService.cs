@@ -93,6 +93,7 @@ namespace ServiceLocator.Profile
         public void NewProfile()
         {
             uiService.GetController().EnableProfileForm(true);
+            ClearFields();
         }
 
         private void EditProfile()
